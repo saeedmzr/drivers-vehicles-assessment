@@ -1,7 +1,6 @@
 <?php
 
-namespace App\Presentation\Base\Responses;
-
+namespace Presentation\Base\Responses;
 use Helper\ArrayHelper;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;

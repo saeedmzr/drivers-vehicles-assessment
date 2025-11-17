@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Presentation\Base\Responses;
+namespace Presentation\Base\Responses;
 
 
-readonly class PaginatedIndexResponse extends BaseResponse
+readonly class PaginatedResponse extends BaseResponse
 {
     public function __construct(
         public array            $items,

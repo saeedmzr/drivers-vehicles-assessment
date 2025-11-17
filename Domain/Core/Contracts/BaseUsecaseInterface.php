@@ -11,4 +11,15 @@ interface BaseUsecaseInterface
     public function destroy($id);
     public function filter(array $filters);
     public function paginate(int $perPage = 15);
+
+    public function searchAndPaginate(
+        ?string $search,
+        array $searchColumns,
+        ?string $sortBy,
+        string $sortDirection,
+        ?bool $hasRelation,
+        string $relationName,
+        int $perPage,
+        int $page
+    );
 }

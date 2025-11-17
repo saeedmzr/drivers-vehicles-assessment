@@ -1,8 +1,8 @@
 <?php
 
-namespace Repositories;
+namespace Domain\User\Repositories;
 
-use Domain\Core\BaseRepository;
+use Domain\Core\Repositories\BaseRepository;
 use Domain\User\Contracts\UserRepositoryInterface;
 use Models\User;
 

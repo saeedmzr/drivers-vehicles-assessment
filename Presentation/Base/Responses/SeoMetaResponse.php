@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Presentation\Base\Responses;
+namespace Presentation\Base\Responses;
 
 readonly class SeoMetaResponse extends BaseResponse
 {

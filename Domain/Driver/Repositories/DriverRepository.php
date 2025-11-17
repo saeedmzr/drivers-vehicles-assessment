@@ -2,8 +2,9 @@
 
 namespace Domain\Driver\Repositories;
 
-use Contracts\DriverRepositoryInterface;
-use Domain\Core\BaseRepository;
+
+use Domain\Core\Repositories\BaseRepository;
+use Domain\Driver\Contracts\DriverRepositoryInterface;
 use Models\Driver;
 
 class DriverRepository extends BaseRepository implements DriverRepositoryInterface

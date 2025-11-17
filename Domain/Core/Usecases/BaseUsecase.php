@@ -9,89 +9,96 @@ abstract class BaseUsecase implements BaseUsecaseInterface
 {
     protected BaseRepositoryInterface $repository;
 
-    /**
-     * Get all records
-     */
     public function all()
     {
         return $this->repository->findAll();
     }
 
-    /**
-     * Find a record by ID
-     */
     public function find($id)
     {
-        return $this->repository->find($id)->getEntities();
+        $model = $this->repository->find($id);
+        return $model ? $model->toEntity() : null;
     }
 
-    /**
-     * Store/Create a new record
-     */
     public function store(array $data)
     {
         return $this->repository->create($data);
     }
 
-    /**
-     * Update an existing record
-     */
     public function update($id, array $data)
     {
         return $this->repository->update($id, $data);
     }
 
-    /**
-     * Delete a record
-     */
     public function destroy($id)
     {
         return $this->repository->delete($id);
     }
 
-    /**
-     * Filter records with conditions
-     */
     public function filter(array $filters)
     {
         return $this->repository->filtering($filters)->getEntities();
     }
 
-    /**
-     * Get paginated records
-     */
     public function paginate(int $perPage = 15)
     {
-        return $this->repository->paginating($perPage)->getEntities();
+        return $this->repository->paginating($perPage);
     }
 
-    /**
-     * Get filtered and paginated records
-     */
     public function filterAndPaginate(array $filters = [], int $perPage = 15)
     {
-        return $this->repository->filtering($filters)->paginating($perPage)->getEntities();
+        return $this->repository->filtering($filters)->paginating($perPage);
     }
 
-    /**
-     * Get ordered records
-     */
     public function orderBy(string $column, string $direction = 'asc')
     {
         return $this->repository->ordering($column, $direction)->getEntities();
     }
 
-    /**
-     * Get entities (domain objects)
-     */
     public function getEntities(): array
     {
         return $this->repository->getEntities();
     }
 
     /**
-     * Magic method to forward any other calls to repository
+     * Advanced search with pagination
      */
+    public function searchAndPaginate(
+        ?string $search,
+        array $searchColumns,
+        ?string $sortBy,
+        string $sortDirection,
+        ?bool $hasRelation,
+        string $relationName,
+        int $perPage,
+        int $page
+    ) {
+        // Reset query to start fresh
+        $this->repository->resetQuery();
+
+        // Apply search if provided
+        if ($search) {
+            $this->repository->searching($search, $searchColumns);
+        }
+
+        // Apply relation filter if provided
+        if ($hasRelation !== null) {
+            if ($hasRelation) {
+                $this->repository->hasRelation($relationName);
+            } else {
+                $this->repository->doesntHaveRelation($relationName);
+            }
+        }
+
+        // Apply sorting
+        if ($sortBy) {
+            $this->repository->ordering($sortBy, $sortDirection);
+        }
+
+        // Return paginated results
+        return $this->repository->paginating($perPage, ['*']);
+    }
+
     public function __call(string $method, array $arguments)
     {
         if (!method_exists($this->repository, $method)) {

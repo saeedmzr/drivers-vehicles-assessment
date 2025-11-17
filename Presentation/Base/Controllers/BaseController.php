@@ -1,8 +1,9 @@
 <?php
+namespace Presentation\Base\Controllers;
 
-use App\Presentation\Base\Responses\BaseResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Presentation\Base\Responses\BaseResponse;
 
 class BaseController extends Controller
 {

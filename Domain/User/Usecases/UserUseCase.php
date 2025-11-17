@@ -1,6 +1,6 @@
 <?php
 
-namespace Usecases;
+namespace Domain\User\Usecases;
 
 use Domain\Core\Usecases\BaseUsecase;
 use Domain\User\Contracts\UserRepositoryInterface;

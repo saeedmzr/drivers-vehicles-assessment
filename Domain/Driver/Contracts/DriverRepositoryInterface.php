@@ -1,6 +1,6 @@
 <?php
 
-namespace Contracts;
+namespace Domain\Driver\Contracts;
 
 use Domain\Core\Contracts\BaseRepositoryInterface;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Core;
+namespace Domain\Core\Repositories;
 
 use Domain\Core\Contracts\BaseRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 abstract class BaseRepository implements BaseRepositoryInterface
 {
     protected Model $model;
-
     protected Builder $query;
 
     public function __construct(Model $model)
@@ -87,5 +86,54 @@ abstract class BaseRepository implements BaseRepositoryInterface
     public function paginating(int $perPage = 15, array $columns = ['*'])
     {
         return $this->query->paginate($perPage, $columns);
+    }
+
+    /**
+     * Search across multiple columns
+     */
+    public function searching(string $search, array $columns): self
+    {
+        $this->query->where(function ($query) use ($search, $columns) {
+            foreach ($columns as $column) {
+                $query->orWhere($column, 'like', "%{$search}%");
+            }
+        });
+        return $this;
+    }
+
+    /**
+     * Add relation count
+     */
+    public function withRelationCount(string $relation): self
+    {
+        $this->query->withCount($relation);
+        return $this;
+    }
+
+    /**
+     * Filter by having a relation
+     */
+    public function hasRelation(string $relation): self
+    {
+        $this->query->has($relation);
+        return $this;
+    }
+
+    /**
+     * Filter by not having a relation
+     */
+    public function doesntHaveRelation(string $relation): self
+    {
+        $this->query->doesntHave($relation);
+        return $this;
+    }
+
+    /**
+     * Reset query builder to start fresh
+     */
+    public function resetQuery(): self
+    {
+        $this->query = $this->model->newQuery();
+        return $this;
     }
 }
