@@ -1,5 +1,7 @@
 <?php
 
+use Models\User;
+
 return [
 
     /*
@@ -14,8 +16,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
-        'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
+        'guard' => 'api',
+        'passwords' => 'users',
     ],
 
     /*
@@ -40,6 +42,18 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+            'remember' => 43200,
+        ],
+
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'users',
+            'token_key' => 'access_token',
+            'storage_key' => 'id',
+        ],
     ],
 
     /*
@@ -62,8 +76,14 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', Models\User::class),
+            'model' => env('AUTH_MODEL', User::class),
         ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => \App\Filament\Admin::class,
+        ],
+
 
         // 'users' => [
         //     'driver' => 'database',
@@ -112,4 +132,16 @@ return [
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
+    'jwt' => [
+        'access_token' => [
+            'algorithm' => env('JWT_ACCESS_ALGORITHM', 'HS256'),
+            'key' => env('JWT_ACCESS_KEY','saeed'),
+            'expires_after' => env('JWT_ACCESS_EXPIRES', 86400),
+        ],
+        'refresh_token' => [
+            'algorithm' => env('JWT_REFRESH_ALGORITHM', 'HS256'),
+            'key' => env('JWT_REFRESH_KEY','saeed'),
+            'expires_after' => env('JWT_REFRESH_EXPIRES', 6*86400),
+        ],
+    ],
 ];

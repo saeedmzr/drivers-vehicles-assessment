@@ -2,10 +2,11 @@ version: '3.8'
 
 services:
   app:
+
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: laravel_app
+    container_name: app
     restart: unless-stopped
     working_dir: /var/www
     volumes:
@@ -35,12 +36,14 @@ services:
     container_name: laravel_mysql
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: laravel
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: laravel
-      MYSQL_PASSWORD: secret
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_USER: "${DB_USERNAME}"
+      SERVICE_TAGS: "dev"
+      SERVICE_NAME: "mysql"
     ports:
-      - "33060:3306"
+      - "3307:3306"
     volumes:
       - mysql-data:/var/lib/mysql
     networks:

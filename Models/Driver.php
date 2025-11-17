@@ -18,28 +18,21 @@ class Driver extends Model
         'license_number',
         'phone_number',
     ];
-
-    /**
-     * Get the vehicles assigned to this driver
-     */
     public function vehicles(): BelongsToMany
     {
         return $this->belongsToMany(Vehicle::class, 'driver_vehicle')
+            ->using(DriverVehicle::class)
             ->withPivot(['assigned_at', 'released_at', 'is_active', 'notes'])
             ->withTimestamps();
     }
 
-    /**
-     * Get only active vehicles for this driver
-     */
     public function activeVehicles(): BelongsToMany
     {
-        return $this->vehicles()->wherePivot('is_active', true);
+        return $this->vehicles()
+            ->using(DriverVehicle::class)
+            ->wherePivot('is_active', true);
     }
 
-    /**
-     * Convert model to domain entity
-     */
     public function toEntity(): DriverEntity
     {
         return new DriverEntity(

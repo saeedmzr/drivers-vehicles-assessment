@@ -23,23 +23,18 @@ class Vehicle extends Model
     protected $casts = [
         'year' => 'integer',
     ];
-
-    /**
-     * Get the drivers assigned to this vehicle
-     */
     public function drivers(): BelongsToMany
     {
         return $this->belongsToMany(Driver::class, 'driver_vehicle')
+            ->using(DriverVehicle::class)
             ->withPivot(['assigned_at', 'released_at', 'is_active', 'notes'])
             ->withTimestamps();
     }
 
-    /**
-     * Get the current active driver for this vehicle
-     */
     public function currentDriver(): BelongsToMany
     {
         return $this->drivers()
+            ->using(DriverVehicle::class)
             ->wherePivot('is_active', true)
             ->wherePivotNull('released_at');
     }

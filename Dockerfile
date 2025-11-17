@@ -9,11 +9,16 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     zip \
-    unzip
+    unzip \
+    zlib1g-dev \
+    libicu-dev \
+    libzip-dev \
+    g++
+
+RUN docker-php-ext-configure intl \
+    && docker-php-ext-install intl zip pdo_mysql mbstring exif pcntl bcmath gd
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 RUN pecl install redis && docker-php-ext-enable redis
 

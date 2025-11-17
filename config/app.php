@@ -14,7 +14,10 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-
+    'admin' => [
+        "url" => env('ADMIN_URL', 'http://localhost'),
+        "root" => env('ADMIN_ROOT', 'admin'),
+    ],
     /*
     |--------------------------------------------------------------------------
     | Application Environment
