@@ -11,4 +11,4 @@ shell:
 shell-as-root:
 	docker exec -u root -it app bash
 test:
-	docker exec -it app ./vendor/bin/phpunit
+	docker exec -i app php artisan test

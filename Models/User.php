@@ -3,6 +3,7 @@
 namespace Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Database\Factories\UserFactory;
 use Domain\User\Entities\UserEntity;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -42,6 +43,11 @@ class User extends Authenticatable
             updatedAt: $this->updated_at,
             deletedAt: $this->deleted_at
         );
+    }
+
+    protected static function newFactory(): UserFactory
+    {
+        return UserFactory::new();
     }
 
 }

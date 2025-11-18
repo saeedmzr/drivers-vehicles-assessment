@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
   app:
-
     build:
       context: .
       dockerfile: Dockerfile
@@ -49,6 +48,25 @@ services:
     networks:
       - laravel
 
+  mysql_test:
+    image: mysql:8.0
+    container_name: laravel_mysql_test
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: "tug_testing"
+      MYSQL_ROOT_PASSWORD: "testing_password"
+      MYSQL_PASSWORD: "testing_password"
+      MYSQL_USER: "testing_user"
+      SERVICE_TAGS: "test"
+      SERVICE_NAME: "mysql_test"
+    ports:
+      - "3308:3306"
+    networks:
+      - laravel
+    command: --default-authentication-plugin=mysql_native_password
+    tmpfs:
+      - /var/lib/mysql:rw,noexec,nosuid,size=1024m
+
   redis:
     image: redis:alpine
     container_name: laravel_redis
@@ -67,3 +85,4 @@ networks:
 volumes:
   mysql-data:
   redis-data:
+  mysql-test-data:

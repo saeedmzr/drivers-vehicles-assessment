@@ -5,6 +5,7 @@ namespace ApplicationLayer\Driver;
 use Domain\Driver\Contracts\DriverUseCaseInterface;
 use Domain\Driver\Exceptions\DriverNotFoundException;
 use Domain\Vehicle\Exceptions\VehicleNotFoundException;
+use Illuminate\Support\Facades\Log;
 use Presentation\Driver\Requests\AssignVehicleRequest;
 use Presentation\Driver\Requests\CreateDriverRequest;
 use Presentation\Driver\Requests\ListDriversRequest;
@@ -95,7 +96,6 @@ class DriverHandler
     public function update(string $id, UpdateDriverRequest $request): SingleDriverResponse
     {
         $data = $request->getUpdateData();
-
         $driver = $this->driverUseCase->update($id, $data);
 
         if (!$driver) {
@@ -149,7 +149,6 @@ class DriverHandler
             'notes' => $request->getNotes(),
         ]);
 
-        // Reload driver with fresh data
         $updatedDriver = $this->driverUseCase->find($driverId);
 
         return new SingleDriverResponse(

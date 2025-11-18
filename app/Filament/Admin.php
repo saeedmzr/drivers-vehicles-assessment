@@ -2,6 +2,7 @@
 
 namespace App\Filament;
 
+use Database\Factories\AdminFactory;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasName;
 use Filament\Panel;
@@ -31,5 +32,9 @@ class Admin extends Authenticatable implements FilamentUser, HasName
     public function getFilamentName(): string
     {
         return 'Admin';
+    }
+    protected static function newFactory(): AdminFactory
+    {
+        return AdminFactory::new();
     }
 }

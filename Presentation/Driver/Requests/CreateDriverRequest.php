@@ -2,6 +2,8 @@
 
 namespace Presentation\Driver\Requests;
 
+
+
 use Presentation\Base\Requests\BaseRequest;
 
 readonly class CreateDriverRequest extends BaseRequest
@@ -18,8 +20,8 @@ readonly class CreateDriverRequest extends BaseRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'license_number' => ['required', 'string', 'max:255', 'unique:drivers,license_number'],
-            'phone_number' => ['required', 'string', 'max:255', 'unique:drivers,phone_number'],
+            'licenseNumber' => ['required', 'string', 'max:255', 'unique:drivers,license_number'],
+            'phoneNumber' => ['required', 'string', 'max:255', 'unique:drivers,phone_number'],
         ];
     }
 

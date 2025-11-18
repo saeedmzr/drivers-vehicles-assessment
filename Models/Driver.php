@@ -2,6 +2,8 @@
 
 namespace Models;
 
+use Database\Factories\AdminFactory;
+use Database\Factories\DriverFactory;
 use Domain\Driver\Entities\DriverEntity;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -44,5 +46,9 @@ class Driver extends Model
             updatedAt: $this->updated_at,
             deletedAt: $this->deleted_at
         );
+    }
+    protected static function newFactory(): DriverFactory
+    {
+        return DriverFactory::new();
     }
 }

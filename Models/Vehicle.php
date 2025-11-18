@@ -2,6 +2,8 @@
 
 namespace Models;
 
+use Database\Factories\DriverFactory;
+use Database\Factories\VehicleFactory;
 use Domain\Vehicle\Entities\VehicleEntity;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -62,5 +64,9 @@ class Vehicle extends Model
             updatedAt: $this->updated_at,
             deletedAt: $this->deleted_at
         );
+    }
+    protected static function newFactory(): VehicleFactory
+    {
+        return VehicleFactory::new();
     }
 }

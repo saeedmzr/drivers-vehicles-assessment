@@ -16,7 +16,7 @@ readonly class AssignVehicleRequest extends BaseRequest
     public static function rules(): array
     {
         return [
-            'vehicle_id' => ['required', 'string', 'exists:vehicles,id'],
+            'vehicleId' => ['required', 'string', 'exists:vehicles,id'],
             'notes' => ['nullable', 'string', 'max:1000'],
         ];
     }

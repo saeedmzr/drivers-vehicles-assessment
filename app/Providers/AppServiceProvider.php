@@ -18,6 +18,7 @@ use Domain\Vehicle\Contracts\VehicleUseCaseInterface;
 use Domain\Vehicle\Repositories\VehicleRepository;
 use Domain\Vehicle\Usecases\VehicleUseCase;
 use Helper\ArrayHelper;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Presentation\Base\Requests\BaseRequest;
@@ -30,7 +31,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(BaseRepositoryInterface::class, BaseRepository::class);
         $this->app->bind(BaseUseCaseInterface::class, BaseUseCase::class);
 
-
         $this->app->beforeResolving(BaseRequest::class, function ($class, $parameters, $app) {
             if ($app->has($class)) {
                 return;
@@ -38,20 +38,11 @@ class AppServiceProvider extends ServiceProvider
 
             $app->bind(
                 $class,
-                function ($container) use ($class) {
-                    $request = $container['request'];
-
-                    $allData = array_merge(
-                        $request->query->all(),
-                        $request->request->all(),
-                        $request->route() ? $request->route()->parameters() : []
-                    );
-
-                    $camelCaseData = ArrayHelper::convertToCamelCase($allData);
-
-                    $snakeCaseData = ArrayHelper::convertToSnakeCase($camelCaseData);
-
-                    $validator = Validator::make($snakeCaseData, $class::rules());
+                function ($container) use ($parameters, $class) {
+                    $allData = [];
+                    $allData = array_merge($allData, $container['request']->query());
+                    $allData = array_merge($allData, $container['request']->all());
+                    $validator = Validator::make(ArrayHelper::convertToCamelCase($allData), $class::rules());
                     $validator->validate();
 
                     return $class::fromArray($validator->validated());

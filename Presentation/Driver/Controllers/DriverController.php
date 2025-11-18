@@ -2,11 +2,12 @@
 
 namespace Presentation\Driver\Controllers;
 
+use ApplicationLayer\Driver\DriverHandler;
 use Domain\Driver\Exceptions\DriverNotFoundException;
 use Domain\Vehicle\Exceptions\VehicleNotFoundException;
-use ApplicationLayer\Driver\DriverHandler;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Presentation\Base\Controllers\BaseController;
 use Presentation\Driver\Requests\AssignVehicleRequest;
 use Presentation\Driver\Requests\CreateDriverRequest;
@@ -21,37 +22,34 @@ class DriverController extends BaseController
     }
 
     /**
-     * Display a paginated listing of drivers.
+     * Display a paginated listing of drivers
      */
-    public function index(ListDriversRequest $request): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         try {
-            $response = $this->driverHandler->index($request);
+            $dto = ListDriversRequest::fromArray($request->all());
+            $response = $this->driverHandler->index($dto);
             return $this->success($response);
-        } catch (ValidationException $e) {
-            return $this->failed($e, ['errors' => $e->errors()], 422);
         } catch (\Throwable $e) {
             return $this->failed($e, ['message' => $e->getMessage()], 500);
         }
     }
 
     /**
-     * Store a newly created driver.
+     * Store a newly created driver
      */
     public function store(CreateDriverRequest $request): JsonResponse
     {
         try {
             $response = $this->driverHandler->store($request);
             return $this->success($response, status: 201);
-        } catch (ValidationException $e) {
-            return $this->failed($e, ['errors' => $e->errors()], 422);
         } catch (\Throwable $e) {
             return $this->failed($e, ['message' => $e->getMessage()], 500);
         }
     }
 
     /**
-     * Display the specified driver.
+     * Display the specified driver
      */
     public function show(string $id): JsonResponse
     {
@@ -66,24 +64,24 @@ class DriverController extends BaseController
     }
 
     /**
-     * Update the specified driver.
+     * Update the specified driver
      */
     public function update(string $id, UpdateDriverRequest $request): JsonResponse
     {
-        try {
+//        try {
             $response = $this->driverHandler->update($id, $request);
             return $this->success($response);
-        } catch (ValidationException $e) {
-            return $this->failed($e, ['errors' => $e->errors()], 422);
-        } catch (DriverNotFoundException $e) {
-            return $this->failed($e, ['message' => $e->getMessage()], 404);
-        } catch (\Throwable $e) {
-            return $this->failed($e, ['message' => $e->getMessage()], 500);
-        }
+//        } catch (DriverNotFoundException $e) {
+//            return $this->failed($e, ['message' => $e->getMessage()], 404);
+//        } catch (\InvalidArgumentException $e) {
+//            return $this->failed($e, ['message' => $e->getMessage()], 422);
+//        } catch (\Throwable $e) {
+//            return $this->failed($e, ['message' => $e->getMessage()], 500);
+//        }
     }
 
     /**
-     * Remove the specified driver.
+     * Remove the specified driver
      */
     public function destroy(string $id): JsonResponse
     {
@@ -98,15 +96,13 @@ class DriverController extends BaseController
     }
 
     /**
-     * Assign a vehicle to a driver.
+     * Assign a vehicle to a driver
      */
     public function assignVehicle(string $id, AssignVehicleRequest $request): JsonResponse
     {
         try {
             $response = $this->driverHandler->assignVehicle($id, $request);
             return $this->success($response);
-        } catch (ValidationException $e) {
-            return $this->failed($e, ['errors' => $e->errors()], 422);
         } catch (DriverNotFoundException | VehicleNotFoundException $e) {
             return $this->failed($e, ['message' => $e->getMessage()], 404);
         } catch (\Throwable $e) {
