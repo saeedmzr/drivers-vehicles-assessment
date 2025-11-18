@@ -68,16 +68,16 @@ class DriverController extends BaseController
      */
     public function update(string $id, UpdateDriverRequest $request): JsonResponse
     {
-//        try {
+        try {
             $response = $this->driverHandler->update($id, $request);
             return $this->success($response);
-//        } catch (DriverNotFoundException $e) {
-//            return $this->failed($e, ['message' => $e->getMessage()], 404);
-//        } catch (\InvalidArgumentException $e) {
-//            return $this->failed($e, ['message' => $e->getMessage()], 422);
-//        } catch (\Throwable $e) {
-//            return $this->failed($e, ['message' => $e->getMessage()], 500);
-//        }
+        } catch (DriverNotFoundException $e) {
+            return $this->failed($e, ['message' => $e->getMessage()], 404);
+        } catch (\InvalidArgumentException $e) {
+            return $this->failed($e, ['message' => $e->getMessage()], 422);
+        } catch (\Throwable $e) {
+            return $this->failed($e, ['message' => $e->getMessage()], 500);
+        }
     }
 
     /**
