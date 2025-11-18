@@ -2,7 +2,7 @@
 
 namespace Domain\Vehicle\Repositories;
 
-use Domain\Core\BaseRepository;
+use Domain\Core\Repositories\BaseRepository;
 use Domain\Vehicle\Contracts\VehicleRepositoryInterface;
 use Models\Vehicle;
 

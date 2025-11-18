@@ -16,4 +16,5 @@ use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/../User/Routes/api.php';
 require __DIR__ . '/../Driver/Routes/api.php';
+require __DIR__ . '/../Vehicle/Routes/api.php';
 
