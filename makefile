@@ -1,11 +1,13 @@
 build:
-	docker-compose  --env-file .env -f docker-compose.yml up -d --build;
+	docker compose  --env-file .env -f docker-compose.yml up -d --build;
+recreate:
+	docker compose  --env-file .env -f docker-compose.yml up -d --force-recreate;
 up:
-	docker-compose  --env-file .env -f docker-compose.yml up -d;
+	docker compose  --env-file .env -f docker-compose.yml up -d;
 down:
-	docker-compose -f  docker-compose.yml down;
+	docker compose -f  docker-compose.yml down;
 ps:
-	docker-compose -f docker-compose.yml ps;
+	docker compose -f docker-compose.yml ps;
 shell:
 	docker exec -it app bash
 shell-as-root:

@@ -3,6 +3,7 @@
 namespace Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class DriverVehicle extends Pivot
@@ -29,4 +30,13 @@ class DriverVehicle extends Pivot
 
     public $incrementing = false;
     protected $keyType = 'string';
+
+    public function driver(): BelongsTo
+    {
+        return $this->belongsTo(Driver::class);
+    }
+    public function vehicle(): BelongsTo
+    {
+        return $this->belongsTo(Vehicle::class);
+    }
 }

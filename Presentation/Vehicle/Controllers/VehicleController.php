@@ -98,15 +98,4 @@ class VehicleController extends BaseController
     /**
      * Assign a driver to a vehicle
      */
-    public function assignDriver(string $id, AssignDriverRequest $request): JsonResponse
-    {
-        try {
-            $response = $this->vehicleHandler->assignDriver($id, $request);
-            return $this->success($response);
-        } catch (VehicleNotFoundException | DriverNotFoundException $e) {
-            return $this->failed($e, ['message' => $e->getMessage()], 404);
-        } catch (\Throwable $e) {
-            return $this->failed($e, ['message' => $e->getMessage()], 500);
-        }
-    }
 }

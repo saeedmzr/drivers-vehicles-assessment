@@ -11,6 +11,7 @@ readonly class SingleDriverResponse extends BaseResponse
         public string $name,
         public string $licenseNumber,
         public string $phoneNumber,
+        public array $vehicles,
         public string $createdAt,
         public string $updatedAt,
     ) {
@@ -23,6 +24,7 @@ readonly class SingleDriverResponse extends BaseResponse
             'name' => $this->name,
             'license_number' => $this->licenseNumber,
             'phone_number' => $this->phoneNumber,
+            'vehicles' => $this->vehicles,
             'created_at' => $this->createdAt,
             'updated_at' => $this->updatedAt,
         ];

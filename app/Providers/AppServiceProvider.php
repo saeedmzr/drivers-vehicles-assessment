@@ -12,6 +12,7 @@ use Domain\Driver\Repositories\DriverRepository;
 use Domain\Driver\Usecases\DriverUseCase;
 use Domain\User\Contracts\UserRepositoryInterface;
 use Domain\User\Contracts\UserUseCaseInterface;
+use Domain\User\Repositories\UserRepository;
 use Domain\User\Usecases\UserUseCase;
 use Domain\Vehicle\Contracts\VehicleRepositoryInterface;
 use Domain\Vehicle\Contracts\VehicleUseCaseInterface;
@@ -59,7 +60,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(VehicleUsecaseInterface::class, VehicleUsecase::class);
 
         //User
-        $this->app->bind(UserRepositoryInterface::class, UserRepositoryInterface::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(UserUsecaseInterface::class, UserUsecase::class);
 
     }

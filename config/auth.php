@@ -54,6 +54,7 @@ return [
             'token_key' => 'access_token',
             'storage_key' => 'id',
         ],
+
     ],
 
     /*

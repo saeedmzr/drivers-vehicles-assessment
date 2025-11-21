@@ -42,6 +42,7 @@ class Driver extends Model
             name: $this->name,
             licenseNumber: $this->license_number,
             phoneNumber: $this->phone_number,
+            vehicles: $this->vehicles ? $this->vehicles->map(fn($vehicle) => $vehicle->toEntity())->toArray() : [],
             createdAt: $this->created_at,
             updatedAt: $this->updated_at,
             deletedAt: $this->deleted_at

@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -17,7 +19,7 @@ abstract class TestCase extends BaseTestCase
     /**
      * Create authenticated user for testing
      */
-    protected function authenticatedUser(): \Models\User
+    protected function authenticatedUser(): Collection|Model
     {
         return \Models\User::factory()->create([
             'is_admin' => true,

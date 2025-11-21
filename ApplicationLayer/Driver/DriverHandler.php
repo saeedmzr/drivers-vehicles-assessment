@@ -63,6 +63,7 @@ class DriverHandler
             name: $driver->name,
             licenseNumber: $driver->license_number,
             phoneNumber: $driver->phone_number,
+            vehicles: $driver->vehicles ? $driver->vehicles->map(fn($vehicle) => $vehicle->toEntity())->toArray() : [],
             createdAt: $driver->created_at->toIso8601String(),
             updatedAt: $driver->updated_at->toIso8601String()
         );
@@ -107,6 +108,7 @@ class DriverHandler
             name: $driver->name,
             licenseNumber: $driver->license_number,
             phoneNumber: $driver->phone_number,
+            vehicles: $driver->vehicles ? $driver->vehicles->map(fn($vehicle) => $vehicle->toEntity())->toArray() : [],
             createdAt: $driver->created_at->toIso8601String(),
             updatedAt: $driver->updated_at->toIso8601String()
         );
@@ -156,6 +158,7 @@ class DriverHandler
             name: $updatedDriver->name,
             licenseNumber: $updatedDriver->licenseNumber,
             phoneNumber: $updatedDriver->phoneNumber,
+            vehicles: $updatedDriver->vehicles ?? [],
             createdAt: $updatedDriver->createdAt?->toIso8601String(),
             updatedAt: $updatedDriver->updatedAt?->toIso8601String()
         );

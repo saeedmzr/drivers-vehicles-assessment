@@ -44,26 +44,9 @@ readonly class VehicleListResponse extends PaginatedResponse
                 'brand' => $vehicle->brand,
                 'model' => $vehicle->model,
                 'year' => $vehicle->year,
-                'drivers_count' => isset($vehicle->drivers) ? count($vehicle->drivers) : 0,
-                'has_active_drivers' => $this->hasActiveDrivers($vehicle),
                 'created_at' => $vehicle->createdAt?->toIso8601String(),
                 'updated_at' => $vehicle->updatedAt?->toIso8601String(),
             ];
         }, $this->items);
-    }
-
-    private function hasActiveDrivers($vehicle): bool
-    {
-        if (!isset($vehicle->drivers) || empty($vehicle->drivers)) {
-            return false;
-        }
-
-        foreach ($vehicle->drivers as $driver) {
-            if (($driver->isActive ?? false) === true) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
